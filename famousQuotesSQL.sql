@@ -68,8 +68,3 @@ INSERT INTO `q_quotes` (`quoteId`, `quote`, `authorId`, `category`, `likes`) VAL
 (31,	'One doesn\'t recognize the really important moments in one\'s life until it\'s too late.',	2,	'Wisdom',	36),
 (32,	'Your success and happiness lies in you. Resolve to keep happy, and your joy and you shall form an invincible host against difficulties.',	6,	'Inspirational',	86);
 
-SHOW TABLES;
-
-SELECT COUNT(*) FROM q_authors;
-SELECT COUNT(*) FROM q_quotes;
-
