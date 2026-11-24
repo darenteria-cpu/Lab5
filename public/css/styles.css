@@ -1,0 +1,15 @@
+footer {
+  text-align: center;
+  padding: 20px;
+  color: rgb(245, 65, 65);
+  font-size: 14px;
+}
+
+footer p {
+  margin: 4px 0;
+}
+
+.logo {
+  width: 225px;
+  margin-top: 5px;
+}
