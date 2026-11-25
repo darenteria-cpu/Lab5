@@ -42,6 +42,24 @@ app.get("/searchByKeyword", async (req, res) => {
     res.render("results",{"quotes":rows});
 });
 
+//finds quotes within a range of likes
+app.get("/searchByLikes", async (req, res) => {
+    let minLikes = Number(req.query.minLikes); //convert to "Number" so alert message pops up
+    let maxLikes = Number(req.query.maxLikes);
+    //ensures min is less than max
+    if (minLikes > maxLikes) {
+      return res.render("results",{"quotes": [],
+                "message": "Minimum likes can't be more than maximum likes."});
+    }
+    let sql = `SELECT quote, authorId, firstName, lastName
+            FROM q_quotes
+            NATURAL JOIN q_authors
+            WHERE likes >= ? AND likes <= ?`;
+    let sqlParams = [minLikes, maxLikes];
+    const [rows] = await conn.query(sql,sqlParams);
+    res.render("results",{"quotes":rows});
+});
+
 //finds all quotes by author chosen in dropdown
 app.get("/searchByAuthor", async (req, res) => {
     let authorId = req.query.authorId;
@@ -54,13 +72,30 @@ app.get("/searchByAuthor", async (req, res) => {
     res.render("results",{"quotes":rows});
 });
 
-//finds all authors, routed to dropdown menu
+//finds all quotes by category chosen in dropdown
+app.get("/searchByCategory", async (req, res) => {
+    let category = req.query.category;
+    let sql = `SELECT quote, authorId, firstName, lastName
+                FROM q_quotes
+                NATURAL JOIN q_authors
+                WHERE category = ?`;
+    let sqlParams = [category];
+    const [rows] = await conn.query(sql, sqlParams);
+    res.render("results",{"quotes":rows});
+})
+
+//sql - finds all authors, routed to dropdown menu.  
+//sql1 - finds all categories in alphabetical order (ASC) and routes to another dropdown
 app.get("/", async (req, res) => {
     let sql = `SELECT authorId, firstName, lastName
             FROM q_authors
             ORDER by lastName`;
-    const [rows] = await conn.query(sql);        
-    res.render("index",{"authors":rows});
+    const [rows] = await conn.query(sql);
+    let sql1 = `SELECT DISTINCT category
+                FROM q_quotes
+                ORDER BY category ASC`;
+    const [rows1] = await conn.query(sql1);
+    res.render("index",{"authors":rows, "quoteCats":rows1}); //only one res.render for two dropdowns
 });
 
 app.get('/api/author/:id', async (req, res) => {
@@ -71,6 +106,8 @@ app.get('/api/author/:id', async (req, res) => {
     const [rows] = await conn.query(sql, [authorId]);
     res.send(rows);
 });
+
+
 
 app.listen(3000, ()=>{
     console.log("Express server running")

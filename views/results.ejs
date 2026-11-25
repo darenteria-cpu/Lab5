@@ -5,6 +5,10 @@
 
     <h1> Quotes Found </h1>
 
+    <% if (typeof message !== "undefined") { %>
+      <div class="alert alert-warning"><%= message %></div>
+    <% }  %>
+
     <% for (i of quotes) { %>
 
             <%= i.quote %> <br>
@@ -33,7 +37,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

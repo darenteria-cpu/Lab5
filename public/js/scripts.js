@@ -17,11 +17,11 @@ async function getAuthorInfo() {
     let authorInfo = document.querySelector("#authorInfo");
     authorInfo.innerHTML = `<h1> ${data[0].firstName}
                                     ${data[0].lastName} </h1>`;
-    authorInfo.innerHTML += `<img src="${data[0].portrait}"width="200"><br>`;
-    authorInfo.innerHTML += `<h2> Date of Birth: ${data[0].dob}<br>
-                                  Date of Death: ${data[0].dod}<br>
-                                  Country of Origin: ${data[0].country}<br>
-                                  Sex: ${data[0].sex}<br>
-                                  Profession: ${data[0].profession}<br>
-                                  Bio:  ${data[0].biography}  </h2>`;
+    authorInfo.innerHTML += `<img src="${data[0].portrait}"width="200"><br>`; //Albert Einstien's original photo link is broken.  I UPDATE'd link.
+    authorInfo.innerHTML += `<h2> <strong>Date of Birth: </strong>${data[0].dob}<br>
+                                  <strong>Date of Death: </strong>${data[0].dod}<br>
+                                  <strong>Country of Origin: </strong>${data[0].country}<br>
+                                  <strong>Sex: </strong>${data[0].sex}<br>
+                                  <strong>Profession: </strong>${data[0].profession}<br>
+                                  <strong>Bio: </strong>${data[0].biography}  </h2>`;
 }
